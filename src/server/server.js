@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 
 // this is the in-memory database ;)
@@ -8,5 +9,6 @@ app.get('/api/data', function (req, res) {
   counter++;
   return res.json({name: 'sunshine', counter: counter});
 });
+const server = app.listen(process.env.PORT || 8080);
 
-app.listen(process.env.PORT || 8080);
+module.exports = {app, server};
