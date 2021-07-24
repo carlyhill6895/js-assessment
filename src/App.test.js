@@ -1,5 +1,5 @@
 import App from './App';
-import { render, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import React from 'react';
 
 describe('App', () => {
@@ -8,23 +8,25 @@ describe('App', () => {
     });
 
     it('should should a logo image', async () => {
-        fetch.mockResponseOnce(JSON.stringify({name: 'sunshine', counter: 0}));
+        fetch.mockResponseOnce(JSON.stringify([]));
         render(<App />);
         expect(await screen.findByRole('img')).toBeInTheDocument();
     });
     it('should render result of backend request', async () => {
-        fetch.mockResponseOnce(JSON.stringify({name: 'sunshine', counter: 2}));
+        fetch.mockResponseOnce(JSON.stringify([{typeOfCare: 'household', startTimestamp: '2021-07-24T10:00:00Z', endTimestamp: '2021-07-24T12:00:00Z', clientName: 'Buurtzorg', information:'Verband wisselen'}]));
 
         render(<App/>);
         expect(await screen.findByText(
-            'Hello sunshine, you called the backend 2 times.'
+            'Buurtzorg'
         )).toBeInTheDocument();
     });
-    it('should show button to open request form', async () => {
-        fetch.mockResponseOnce(JSON.stringify({name: 'sunshine', counter: 2}));
-        render(<App/>);
-        expect(await screen.findByText('Nieuwe aanvraag')).toBeInTheDocument();
-    });
 
-    // TODO: test clicking on button
+    it('should show new request form after clicking on the button to open request', async () => {
+        fetch.mockResponse(JSON.stringify([]));
+        render(<App/>);
+
+        fireEvent.click(await screen.findByText('Nieuwe aanvraag'));
+
+        expect(await screen.findByText('Type zorg')).toBeInTheDocument();
+    });
 });

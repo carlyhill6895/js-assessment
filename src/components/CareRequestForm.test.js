@@ -6,7 +6,7 @@ describe('CareRequestForm', () => {
 
     it('should show an input for the type of care', async () => {
         render(<CareRequestForm />);
-        expect(await screen.findByText('Type Zorg')).toBeInTheDocument();
+        expect(await screen.findByText('Type zorg')).toBeInTheDocument();
     });
 
     it('should show an input for startTimestamp', async () => {

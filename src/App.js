@@ -4,15 +4,13 @@ import './App.css';
 import {CareRequestForm} from './components/CareRequestForm';
 
 function App() {
-    const [name, setName] = useState('unknown');
-    const [counter, setCounter] = useState(0);
+    const [careRequests, setCareRequests] = useState([]);
     const [showCareRequestForm, setShowRequestForm] = useState(false);
 
     const fetchData = async () => {
-        const response = await fetch('/api/data');
+        const response = await fetch('/api/care-requests');
         const result = await response.json();
-        setName(result.name);
-        setCounter(result.counter);
+        setCareRequests(result);
     };
 
     const handleCareRequestFinished = () => setShowRequestForm(false);
@@ -20,13 +18,17 @@ function App() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [showCareRequestForm]);
 
     return (
         <div className="main">
-            <img src={logo} alt="" width="100" style={{padding: '10px'}}/><br/>
-            Hello {name}, you called the backend {counter} times.
+            <img src={logo} alt="" width="100"/><br/>
+            <h2>Aanvragen</h2>
+            <ul>
+                {careRequests.map((careRequest, i) => <li key={`request-${i}`}>{careRequest.clientName}</li>)}
+            </ul>
 
+            <br />
             {showCareRequestForm ? <CareRequestForm onFinished={handleCareRequestFinished}/> :
                 <button onClick={handleNewRequest}>Nieuwe aanvraag</button>}
         </div>

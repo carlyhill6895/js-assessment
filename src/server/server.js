@@ -5,13 +5,10 @@ const app = express();
 app.use(bodyParser.json());
 
 // this is the in-memory database ;)
-let counter = 0;
-
 let careRequests = [];
 
-app.get('/api/data', function (req, res) {
-    counter++;
-    return res.json({name: 'sunshine', counter: counter});
+app.get('/api/care-requests', function (req, res) {
+    return res.json(careRequests);
 });
 
 app.post('/api/care-requests', function (req, res) {
