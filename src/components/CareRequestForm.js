@@ -3,7 +3,7 @@ import './care-request-form.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export function CareRequestForm() {
+export function CareRequestForm(props) {
     // TODO: fix weird error with setting select value for the second time
     const [typeOfCare, setTypeOfCare] = useState('');
     const [startTimestamp, setStartTimestamp] = useState(new Date());
@@ -12,10 +12,8 @@ export function CareRequestForm() {
     const [information, setInformation] = useState('');
 
     function handleEvent(e, setter) {
-        const value = e.target?.value;
-        if (value) {
-            setter(() => value);
-        }
+        const value = e.target?.value || '';
+        setter(() => value);
     }
 
     async function sendRequest() {
@@ -33,6 +31,7 @@ export function CareRequestForm() {
             body: JSON.stringify(body)
         });
 
+        props.onFinished();
         console.log(response.status);
     }
 
@@ -51,27 +50,27 @@ export function CareRequestForm() {
 
 
                 <div className="form-item">
-                    <label>Start datum/tijd:</label>
+                    <label>Start datum/tijd</label>
                     <DatePicker showTimeSelect dateFormat="Pp" selected={startTimestamp}
                                 onChange={(date) => setStartTimestamp(date)}/>
                     Ingevuld: {startTimestamp.toUTCString()}
                 </div>
 
                 <div className="form-item">
-                    <label>Eind datum/tijd:</label>
+                    <label>Eind datum/tijd</label>
                     <DatePicker showTimeSelect dateFormat="Pp" selected={endTimestamp}
                                 onChange={(date) => setEndTimestamp(date)}/>
                     Ingevuld: {endTimestamp.toUTCString()}
                 </div>
 
                 <div className="form-item">
-                    <label>Naam klant:</label>
-                    <input  type="text" value={clientName} onChange={e => handleEvent(e, setClientName)}/>
+                    <label>Naam klant</label>
+                    <input type="text" value={clientName} onChange={e => handleEvent(e, setClientName)}/>
                     Ingevuld: {clientName}
                 </div>
 
                 <div className="form-item">
-                    <label>Informatie over aanvraag:</label>
+                    <label>Informatie over aanvraag</label>
                     <textarea value={information} onChange={e => handleEvent(e, setInformation)}/>
                     Ingevuld: {information}
                 </div>

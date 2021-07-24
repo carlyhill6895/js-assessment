@@ -20,9 +20,11 @@ describe('App', () => {
             'Hello sunshine, you called the backend 2 times.'
         )).toBeInTheDocument();
     });
-    it('should show request form', async () => {
+    it('should show button to open request form', async () => {
         fetch.mockResponseOnce(JSON.stringify({name: 'sunshine', counter: 2}));
         render(<App/>);
-        expect(await screen.findByText('Voer hier de gegevens van uw zorgvraag in.')).toBeInTheDocument();
+        expect(await screen.findByText('Nieuwe aanvraag')).toBeInTheDocument();
     });
+
+    // TODO: test clicking on button
 });
