@@ -25,7 +25,7 @@ function App() {
             <img src={logo} alt="" width="100"/><br/>
             <h2>Aanvragen</h2>
             <ul>
-                {careRequests.map((careRequest, i) => <li key={`request-${i}`}>{careRequest.clientName}</li>)}
+                {careRequests.map((careRequest, i) => <li key={`request-${i}`}>{`${careRequest.clientName}: ${careRequest.information}`}</li>)}
             </ul>
 
             <br />

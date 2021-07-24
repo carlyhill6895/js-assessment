@@ -17,7 +17,7 @@ describe('App', () => {
 
         render(<App/>);
         expect(await screen.findByText(
-            'Buurtzorg'
+            'Buurtzorg: Verband wisselen'
         )).toBeInTheDocument();
     });
 
